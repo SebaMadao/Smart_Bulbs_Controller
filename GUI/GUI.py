@@ -5,9 +5,17 @@ def make_window():
     theme = 'DarkGrey15'
     sg.theme(theme)
 
+    layout_online_bulbs = [[sg.Button('Search bulbs', expand_x=True, key='-BUTTON-SEARCH-BULBS')],
+                           [sg.Listbox(values=['Listbox 1', 'Listbox 2', 'Listbox 3'], expand_y=True)]
+                           ]
+
     layout = [[sg.Text('SMART BULBS CONTROLLER', size=(38, 1), justification='center', font=("Helvetica", 16),
-                       relief=sg.RELIEF_RIDGE)]
+                       relief=sg.RELIEF_RIDGE, expand_x=True)]
               ]
+
+    layout += [[sg.TabGroup([[sg.Tab('Online Bulbs', layout_online_bulbs),
+                              ]], expand_x=True, expand_y=True)
+                ]]
 
     window = sg.Window('SMART BULBS CONTROLLER', layout, keep_on_top=False, grab_anywhere=True, resizable=True)
     return window

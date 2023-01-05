@@ -26,14 +26,19 @@ def make_window():
                                   sg.Text("NO DATA", key='-TEXT-BRIGHT-STATUS-')],
                                  [sg.Text("RGB Color:", size=(25, 1), justification='center',
                                           font=("Helvetica", 10), relief=sg.RELIEF_RIDGE, expand_x=True)],
-                                 [sg.Text("NO DATA", key='-TEXT-RGB-COLOR-STATUS-')],
+                                 [sg.Text("NO DATA", key='-TEXT-RGB-COLOR-STATUS-'),
+                                  sg.Canvas(background_color=sg.theme_button_color()[1], size=(40, 20), expand_x=True,
+                                            key='-CANVAS-RGB-COLOR-')],
                                  [sg.Text("Color temperature:", size=(25, 1), justification='center',
                                           font=("Helvetica", 10), relief=sg.RELIEF_RIDGE, expand_x=True)],
-                                 [sg.Text("NO DATA", key='-TEXT-COLOR-TEMPERATURE-STATUS-')]
+                                 [sg.Text("NO DATA", key='-TEXT-COLOR-TEMPERATURE-STATUS-'),
+                                  sg.Canvas(background_color=sg.theme_button_color()[1], size=(40, 20), expand_x=True,
+                                            key='-CANVAS-KELVIN-COLOR-')
+                                  ]
                                  ]
 
     layout_online_bulbs = [[sg.Column(layout_online_bulbs_left, p=0, expand_y=True, expand_x=True),
-                           sg.Column(layout_online_bulbs_right, p=0, expand_y=True, expand_x=True)]
+                            sg.Column(layout_online_bulbs_right, p=0, expand_y=True, expand_x=True)]
                            ]
 
     layout = [[sg.Text('SMART BULBS CONTROLLER', size=(35, 1), justification='center', font=("Helvetica", 16),
@@ -72,7 +77,9 @@ def start_gui():
                                                             key_bright_status='-TEXT-BRIGHT-STATUS-',
                                                             key_rgb_color_status='-TEXT-RGB-COLOR-STATUS-',
                                                             key_color_temperature_status=
-                                                            '-TEXT-COLOR-TEMPERATURE-STATUS-')
+                                                            '-TEXT-COLOR-TEMPERATURE-STATUS-',
+                                                            key_canvas_rgb_color='-CANVAS-RGB-COLOR-',
+                                                            key_canvas_kelvin_color='-CANVAS-KELVIN-COLOR-')
 
         if 'IF' in event:
             pass

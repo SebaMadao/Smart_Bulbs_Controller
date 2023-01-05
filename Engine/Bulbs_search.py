@@ -12,8 +12,5 @@ def get_list_of_bulbs():
 if __name__ == '__main__':
     print(get_list_of_bulbs())
     for bulb in get_list_of_bulbs():
-        bulb.turn_on()
-        bulb.set_rgb(255, 0, 0)
         print(bulb.get_properties())
-
 

@@ -31,22 +31,26 @@ def event_set_up_power(bulb):
         bulb.turn_on()
 
 
-def event_update_color_chooser_button(key_button):
-    pass
+def event_update_color_chooser_button(key_button, key_rgb_text, window, color):
+    print(color)
+    window[key_button].update(button_color=(color, ))
+    window[key_rgb_text].update(Engine.Color_translation.get_rgb_from_hex(color))
 
 
-def event_update_canvas_kelvin_color(key_canvas):
-    pass
+def event_update_canvas_kelvin_color(key_canvas, window, temp_value):
+    window[key_canvas].update(background_color=Engine.Color_translation.get_hex_from_rgb(
+        Engine.Kelvin_color.get_rgb_color_from_kelvin_temperature_color(int(temp_value))))
 
 
 def event_set_up_bright(bulb, bright):
     bulb.set_brightness(int(bright))
 
 
-def event_set_up_rgb_color(bulb):
-    pass
+def event_set_up_rgb_color(bulb, color_in_hex):
+    rgb_color = Engine.Color_translation.get_rgb_from_hex(color_in_hex)
+    bulb.set_rgb(rgb_color['R'], rgb_color['G'], rgb_color['B'])
 
 
-def event_set_up_kelvin_color(bulb):
-    pass
+def event_set_up_kelvin_color(bulb, kelvin_color):
+    bulb.set_color_temp(kelvin_color)
 

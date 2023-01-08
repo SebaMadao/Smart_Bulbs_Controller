@@ -50,15 +50,18 @@ def make_window():
                                       key='-BUTTON-SET-BRIGHT-'),
                             sg.Button('Set', size=(8, 1), key='-BUTTON-SET-UP-BRIGHT-')],
                            [set_name_with_space('Temp: ', space_for_layout_online_bulbs_set_properties),
-                            sg.Slider((1700, 6500), resolution=100, orientation='h', size=(10, 15), expand_x=True),
+                            sg.Slider((1700, 6500), resolution=100, orientation='h', size=(10, 15), expand_x=True,
+                                      enable_events=True, key='-SLIDER-SET-TEMP-COLOR-'),
                             sg.Canvas(background_color=sg.theme_button_color()[1], size=(50, 30),
                                       key='-CANVAS-SET-KELVIN-COLOR-'),
                             sg.Button('Set', size=(8, 1), key='-BUTTON-SET-UP-TEMP-COLOR-')],
                            [set_name_with_space('RGB: ', space_for_layout_online_bulbs_set_properties),
-                            sg.Text('', expand_x=True),
+                            sg.Input("", visible=False, enable_events=True,
+                                     key='-IN-COLOR-CHOOSER-BUTTON-SET-RGB-COLOR-'),
                             sg.ColorChooserButton("Choose", border_width=1, size=(8, 1),
                                                   key='-COLOR-CHOOSER-BUTTON-SET-RGB-COLOR-'),
-                            sg.Text("{'R': 0, 'G': 0, 'B': 0}", key='-TEXT-SET-RGB-COLOR-'),
+                            sg.Text("{'R': 0, 'G': 0, 'B': 0}", key='-TEXT-SET-RGB-COLOR-', expand_x=True,
+                                    justification='center'),
                             sg.Button('Set', size=(8, 1), key='-BUTTON-SET-UP-RGB-COLOR-')]
                            ]
 
@@ -116,6 +119,27 @@ def start_gui():
             if check_if_it_bulb(key_selected_bulb='-LISTBOX-SEARCH-BULBS-', values=values):
                 GUI_events.event_set_up_bright(bulb=values['-LISTBOX-SEARCH-BULBS-'][0],
                                                bright=values['-BUTTON-SET-BRIGHT-'])
+
+        if event == '-SLIDER-SET-TEMP-COLOR-':
+            GUI_events.event_update_canvas_kelvin_color(key_canvas='-CANVAS-SET-KELVIN-COLOR-', window=window,
+                                                        temp_value=values['-SLIDER-SET-TEMP-COLOR-'])
+
+        if event == '-IN-COLOR-CHOOSER-BUTTON-SET-RGB-COLOR-':
+            GUI_events.event_update_color_chooser_button(key_button='-COLOR-CHOOSER-BUTTON-SET-RGB-COLOR-',
+                                                         key_rgb_text='-TEXT-SET-RGB-COLOR-',
+                                                         color=values['-IN-COLOR-CHOOSER-BUTTON-SET-RGB-COLOR-'],
+                                                         window=window)
+
+        if event == '-BUTTON-SET-UP-RGB-COLOR-':
+            if check_if_it_bulb(key_selected_bulb='-LISTBOX-SEARCH-BULBS-', values=values):
+                if values['-IN-COLOR-CHOOSER-BUTTON-SET-RGB-COLOR-']:
+                    GUI_events.event_set_up_rgb_color(bulb=values['-LISTBOX-SEARCH-BULBS-'][0],
+                                                      color_in_hex=values['-IN-COLOR-CHOOSER-BUTTON-SET-RGB-COLOR-'])
+
+        if event == '-BUTTON-SET-UP-TEMP-COLOR-':
+            if check_if_it_bulb(key_selected_bulb='-LISTBOX-SEARCH-BULBS-', values=values):
+                GUI_events.event_set_up_kelvin_color(bulb=values['-LISTBOX-SEARCH-BULBS-'][0],
+                                                     kelvin_color=values['-SLIDER-SET-TEMP-COLOR-'])
 
         if '-SET-UP-' in event:
             if check_if_it_bulb(key_selected_bulb='-LISTBOX-SEARCH-BULBS-', values=values):
